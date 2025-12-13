@@ -1,0 +1,422 @@
+[
+  {
+    "question": "Explain how the add method in the ArrayBag class ensures that no more entries are added once the bag is full. Include in your explanation the role of the checkIntegrity() and isArrayFull() methods.",
+    "answer": "The add method in the ArrayBag class first calls checkIntegrity() to verify that the bag's internal state is valid and secure before proceeding. Then, it checks if the underlying array is full by calling isArrayFull(). If the array is full, the method returns false, indicating that the addition was unsuccessful. Otherwise, it adds the new entry to the bag at the position indicated by numberOfEntries, increments numberOfEntries, and returns true. This mechanism prevents adding entries beyond the bag's capacity, ensuring the implementation is secure and does not cause array overflow.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the stub methods remove() and clear() in the ArrayBag class, describe what their intended functionalities are and why they currently return default values or have empty bodies.",
+    "answer": "The remove() method is intended to remove one unspecified entry from the bag and return the removed entry if successful, or null if no removal is possible. The remove(T anEntry) method is meant to remove one occurrence of a specific entry from the bag and return true if successful or false otherwise. The clear() method should remove all entries from the bag, effectively emptying it. Currently, these methods are stubs, meaning they have placeholder implementations: remove() returns null, remove(T anEntry) returns false, and clear() has an empty body. These stubs exist because the methods are incomplete and need to be fully implemented later to provide the described functionalities.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Write a Java method named display that takes a BagInterface<String> as a parameter and prints all the elements in the bag, each on a new line, preceded by the message \"myBag contains following heroes:\". Use the toArray() method of the bag to access its contents.",
+    "answer": "public static void display(BagInterface<String> aBag) {\n    System.out.println(\"myBag contains following heroes:\");\n    Object[] bagArray = aBag.toArray();\n    System.out.println(\" \");\n    for (int index = 0; index < bagArray.length; index++) {\n        System.out.println(bagArray[index]);\n    }\n    System.out.println();\n}\n\nThis method first prints the header message, then retrieves the contents of the bag as an Object array using toArray(). It iterates through the array, printing each element on a new line, and finally prints an empty line for formatting.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why the remove() method in the ArrayBag implementation replaces the removed entry with null. What is the significance of this action in terms of memory management?",
+    "answer": "The remove() method replaces the removed entry with null to eliminate the reference to the object stored at that position in the array. By setting bag[numberOfEntries] to null, the method allows the Java garbage collector to reclaim the memory assigned to the deleted entry, provided no other references to that object exist elsewhere in the client code. This prevents memory leaks by ensuring that unused objects are eligible for garbage collection.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the following method signature in ArrayBag: public boolean remove(T anEntry), why is it preferable to implement the return statement as 'return result != null;' rather than 'return result.equals(anEntry);'?",
+    "answer": "Using 'return result != null;' is preferable because it directly checks whether an entry was actually removed (i.e., removeEntry returned a non-null object). This avoids potential NullPointerExceptions that could occur if result is null and equals() is called on it. Additionally, since removeEntry returns the removed entry or null if no removal occurred, checking for non-null is sufficient to confirm successful removal. On the other hand, 'return result.equals(anEntry);' assumes result is non-null and that the removed entry equals the argument, which may not always be safe or necessary.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Rewrite the getIndexOf(T anEntry) method from the ArrayBag class so that it does not use a boolean variable to control the loop. Provide the revised code and explain how it works.",
+    "answer": "Revised getIndexOf method without a boolean variable:\n\nprivate int getIndexOf(T anEntry) {\n    int where = -1;\n    for (int index = 0; (where == -1) && (index < numberOfEntries); index++) {\n        if (anEntry.equals(bag[index]))\n            where = index;\n    }\n    return where;\n}\n\nExplanation: This method uses a for loop that continues as long as 'where' remains -1 (meaning the entry has not been found) and the index is less than the number of entries. When anEntry is found at bag[index], 'where' is set to that index, causing the loop condition (where == -1) to become false and the loop to terminate early. This approach eliminates the need for a separate boolean variable to track whether the entry was found.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain how the method getIndexOf(T anEntry) can be implemented without using a Boolean variable to indicate whether the entry has been found. Provide a code snippet to illustrate your answer.",
+    "answer": "The method getIndexOf(T anEntry) can be implemented by using the variable 'where' to track the index of the found entry. Instead of using a Boolean variable to indicate if the entry is found, the method uses a loop that continues until 'where' is no longer -1 (meaning the entry is found) or until the end of the array is reached. Here is an example implementation:\n\n```java\nprivate int getIndexOf(T anEntry) {\n    int where = -1;\n    for (int index = 0; (where == -1) && (index < numberOfEntries); index++) {\n        if (anEntry.equals(bag[index]))\n            where = index;\n    }\n    return where;\n}\n```\n\nThis approach eliminates the need for a separate Boolean variable by using the 'where' variable as the condition to terminate the loop.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "What is array resizing in the context of implementing an ADT Bag using arrays, and how is it typically performed in Java? Include an example of increasing the capacity of an array by five elements.",
+    "answer": "Array resizing is the process of increasing the capacity of an array when it becomes full, allowing more elements to be added beyond its initial fixed size. Since arrays in Java have a fixed size once created, resizing involves creating a new, larger array and copying the contents of the original array into it.\n\nIn Java, this can be done using the Arrays.copyOf method or by manually creating a new array and copying elements using System.arraycopy. For example, to increase the capacity of an existing array 'text' by five elements without altering its current contents:\n\n```java\ntext = Arrays.copyOf(text, text.length + 5);\n```\n\nor equivalently:\n\n```java\nString[] origText = text;\ntext = new String[text.length + 5];\nSystem.arraycopy(origText, 0, text, 0, origText.length);\n```\n\nThis process allows the bag to dynamically grow as more entries are added.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the advantages and disadvantages of using a fixed-size array to implement the ADT Bag, and explain how the method doubleCapacity() addresses one of the disadvantages.",
+    "answer": "Advantages of using a fixed-size array to implement the ADT Bag include:\n- Adding an entry to the bag is fast because it involves placing the new entry at the next available index.\n- Removing an unspecified entry is fast since it can be done by replacing the removed entry with the last entry.\n\nDisadvantages include:\n- Removing a particular entry requires time to locate the entry within the array.\n- The size of the bag is limited by the fixed size of the array, which can be restrictive.\n- Increasing the size of the array requires time to copy its entries to a new, larger array.\n\nThe method doubleCapacity() addresses the limitation of fixed size by doubling the size of the array when it becomes full. This method first checks that the new capacity does not exceed a maximum allowed capacity, then creates a new array with twice the length of the current array and copies the existing entries into it using Arrays.copyOf. This allows the bag to accommodate more entries dynamically, mitigating the fixed size limitation.\n\nExample of doubleCapacity():\n\n```java\nprivate void doubleCapacity() {\n    int newLength = 2 * bag.length;\n    checkCapacity(newLength);\n    bag = Arrays.copyOf(bag, newLength);\n}\n```",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "What is the primary characteristic of the bag described in the context?",
+    "answer": "The bag is initialized with a limited size, meaning it has a fixed capacity when created.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_2",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Based on the context, what might be a limitation of using a bag initialized with a limited size?",
+    "answer": "A bag with a limited size cannot hold more elements than its initial capacity, which may lead to issues if more items need to be added beyond that limit.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_2",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Why might a ResizableArrayBag implementation be preferred over a bag initialized with limited size, as suggested by the filename 'ResizableArrayBag.java'?",
+    "answer": "A ResizableArrayBag can dynamically adjust its capacity as more elements are added, overcoming the limitation of a fixed-size bag and allowing for more flexible and efficient storage management.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_2",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why the linked list implementation of a bag is preferred over an array implementation in terms of memory usage and resizing.",
+    "answer": "The linked list implementation of a bag is preferred over an array implementation because it uses memory only as needed for each new entry, avoiding wasted space that can occur in arrays due to fixed size. Arrays have a fixed size and may become full, requiring resizing which incurs overhead in time and complexity. In contrast, linked lists dynamically allocate memory for each node and return memory to the system when nodes are removed, making them more memory efficient and flexible.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "In the analogy of desks linked by numbers, the instructor knows the address of only one desk. Where is this desk located in the chain, and who is sitting at that desk? Explain your reasoning.",
+    "answer": "The desk whose address the instructor knows is at the beginning (first) of the chain. The student sitting at that desk is the one who arrived last. This is because each new desk is added to the beginning of the chain, and the instructor updates the memorized address to point to the newest desk. Thus, the instructor always knows the address of the first desk in the chain, which corresponds to the most recently added student.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "In the toArray method of the LinkedBag class, the while loop uses the condition (index < numberOfEntries) && (currentNode != null). Is it necessary to check both conditions? Justify your answer.",
+    "answer": "It is not strictly necessary to check both conditions because either condition alone would be sufficient to control the loop. Checking 'index < numberOfEntries' ensures the loop does not exceed the number of entries, while checking 'currentNode != null' ensures the loop stops if the end of the chain is reached. However, testing both conditions provides a safeguard against coding errors, ensuring robustness by verifying that the loop neither overruns the expected number of entries nor dereferences a null node.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "In the method getFrequencyOf, why does the while loop test both (loopCounter < numberOfEntries) and (currentNode != null)? Explain the reasoning behind testing both conditions.",
+    "answer": "The while loop in getFrequencyOf tests both (loopCounter < numberOfEntries) and (currentNode != null) to ensure safe and correct traversal of the linked nodes. Testing loopCounter < numberOfEntries prevents the loop from iterating more times than the number of entries in the bag, which guards against infinite loops if the linked structure is corrupted. Testing currentNode != null ensures that the traversal stops if the end of the linked chain is reached (i.e., no more nodes exist). Although testing either condition alone could be sufficient, testing both provides a double check against mistakes in the code and helps maintain robustness.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "What value does the contains method return if currentNode becomes null during its execution, assuming the bag is not empty? Explain why.",
+    "answer": "If currentNode becomes null during the execution of the contains method, the method returns false. This is because currentNode becoming null indicates that the entire linked chain has been searched without finding the entry (anEntry). Since the bag is not empty but the entry was not found, the method correctly returns false to indicate the entry is not present in the bag.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Define a class representing a node in a doubly linked chain as an inner class of a bag implementation. What are the key components of this class, and why are both next and previous references necessary?",
+    "answer": "The class representing a node in a doubly linked chain includes: (1) a data field to store the entry (of generic type T), (2) a reference to the next node, and (3) a reference to the previous node. Both next and previous references are necessary because a doubly linked chain allows traversal in both directions—forward and backward—enabling more flexible operations such as reverse iteration or efficient removal of nodes. The class typically has constructors to initialize these fields. For example:\n\nprivate class DoublyLinkedNode {\n  private T data;\n  private DoublyLinkedNode next;\n  private DoublyLinkedNode previous;\n\n  private DoublyLinkedNode(T dataPortion) {\n    this(dataPortion, null, null);\n  }\n\n  private DoublyLinkedNode(T dataPortion, DoublyLinkedNode nextNode, DoublyLinkedNode previousNode) {\n    data = dataPortion;\n    next = nextNode;\n    previous = previousNode;\n  }\n}\n\nThis design supports the doubly linked structure required for the bag implementation.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the two cases involved in removing an item from a linked chain as described in the lecture. How does the removal process differ between these cases?",
+    "answer": "The two cases for removing an item from a linked chain are:\n\nCase 1: The item to be removed is the first node in the chain. In this case, the removal involves locating the first node (or desk), obtaining the address of the second node, and then updating the reference to point to this second node. This effectively removes the first node from the chain.\n\nCase 2: The item to be removed is not the first node. Here, the data from the first node is moved to the node that is to be removed, effectively overwriting it. Then, the first node is removed using the steps described in Case 1. This approach avoids traversing the entire chain to remove the node directly.\n\nThus, Case 1 involves directly removing the first node, while Case 2 involves swapping data and then removing the first node.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture13_bag_implementation_linked_data_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the implementation and functionality of the remove() method in the LinkedBag class. What does this method return if the bag is empty?",
+    "answer": "The remove() method in the LinkedBag class removes one unspecified entry from the bag, specifically the first node in the linked chain if it exists. The method works as follows:\n\n- It initializes a variable result to null.\n- If the firstNode is not null (i.e., the bag is not empty), it assigns the data of firstNode to result.\n- It then updates firstNode to point to the next node in the chain, effectively removing the first node.\n- The numberOfEntries is decremented to reflect the removal.\n- Finally, it returns the result, which is the data of the removed node.\n\nIf the bag is empty (firstNode is null), the method returns null, indicating no removal occurred.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture13_bag_implementation_linked_data_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the removeEvery(T anEntry) method for the LinkedBag class, explain how it removes all occurrences of a given entry. Why does it replace the located entry's data with the data from the first node before removing the first node?",
+    "answer": "The removeEvery(T anEntry) method removes all occurrences of a specified entry from the linked bag by iterating through the nodes:\n\n- It starts with a searcher node at firstNode.\n- While searcher is not null, it checks if the current node's data equals anEntry.\n- If a match is found, it replaces the data in the current node with the data from the first node.\n- Then, it removes the first node by updating firstNode to firstNode.next and decrementing numberOfEntries.\n- The search continues by moving searcher to the next node.\n\nThis approach works because removing a node other than the first node directly is more complex in a singly linked list. By copying the data from the first node into the node to be removed, and then removing the first node, the method effectively removes the targeted entry without needing to traverse or modify links to nodes other than the first. This technique simplifies removal by always removing from the front of the chain.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture13_bag_implementation_linked_data_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why it is important to consider the efficiency of algorithms even though modern computers are faster and have larger memories.",
+    "answer": "Despite advances in computer speed and memory capacity, efficient code is important because inefficient algorithms can still lead to excessive execution times and resource usage, especially as data sizes grow. Efficient algorithms reduce time and space complexity, making programs faster and more scalable. Measuring efficiency helps in selecting the best algorithm for a problem, ensuring optimal performance.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the three algorithms for summing integers from 1 to n (Algorithm A: single loop summation, Algorithm B: nested loops summation, Algorithm C: direct formula), compare their time complexities and explain the observed differences in execution times.",
+    "answer": "Algorithm A uses a single loop from 1 to n, performing n additions, so its time complexity is O(n). Algorithm B uses nested loops: the outer loop runs n times, and the inner loop runs i times for each iteration, resulting in approximately n(n+1)/2 operations, so its time complexity is O(n²). Algorithm C uses a direct mathematical formula n*(n+1)/2, performing a constant number of operations, so its time complexity is O(1). Execution times reflect these complexities: Algorithm C is fastest (constant time), Algorithm A is moderate (linear time), and Algorithm B is slowest (quadratic time), especially noticeable for large n.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Prove that the function f(n) = 3n² + 2n is O(2n) by identifying suitable constants c and N, and explain the reasoning.",
+    "answer": "To show 3n² + 2n is O(2n), we need constants c > 0 and N such that for all n ≥ N, 3n² + 2n ≤ c * 2n. For n ≥ 8, 3n² + 2n ≤ 2n + 2n = 2 * 2n. Thus, choosing c = 2 and N = 8 satisfies the definition of Big Oh notation. This means beyond n=8, 3n² + 2n grows no faster than a constant multiple of 2n, confirming f(n) is O(2n).",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Consider the algorithm hasDuplicates(array, n) that checks for duplicate entries within the first n elements of an array by using nested loops. What is the worst-case time complexity of this algorithm in Big Oh notation? Explain your reasoning.",
+    "answer": "The worst-case time complexity of the hasDuplicates algorithm is O(n²). This is because the algorithm uses two nested loops: the outer loop runs from index = 0 to n - 2, and for each iteration of the outer loop, the inner loop runs from rest = index + 1 to n - 1. The total number of inner loop executions is the sum 1 + 2 + ... + (n - 1), which equals n(n - 1)/2. Since this sum grows proportionally to n², the overall time complexity is O(n²).",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given an algorithm with time complexity f(n) and a function g(n), under what conditions can we say that f(n) is Ω(g(n))? Provide the formal definition and explain its meaning in terms of algorithm time requirements.",
+    "answer": "A function f(n) is Ω(g(n)) if there exist positive constants c and N such that for all n ≥ N, f(n) ≥ c × g(n). This means that the time requirement f(n) has a lower bound proportional to g(n). In other words, f(n) does not grow slower than g(n) beyond some input size N, ensuring that g(n) is a lower bound on the growth rate of f(n). This is useful for establishing the minimum time complexity an algorithm can have.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the difference between Big Omega (Ω) notation and Big Theta (Θ) notation in the context of algorithm time complexity. How does Big Theta notation provide a more precise characterization of an algorithm's time requirement?",
+    "answer": "Big Omega (Ω) notation provides a lower bound on the time complexity of an algorithm, meaning that the algorithm's running time is at least proportional to g(n) for sufficiently large n. Big Theta (Θ) notation, on the other hand, tightly bounds the time complexity from both above and below. Formally, f(n) is Θ(g(n)) if f(n) is both O(g(n)) (an upper bound) and Ω(g(n)) (a lower bound). This means that the time requirement f(n) grows at the same rate as g(n), up to constant factors. Therefore, Big Theta notation assures us that the time estimate is as accurate as possible, giving a precise characterization of the algorithm's time complexity.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture14_the_efficiency_of_algorithms_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the concept of Inheritance in Object-Oriented Programming and provide a Java example illustrating it.",
+    "answer": "Inheritance allows you to define a general class and then create more specialized classes that extend the general class by adding new details or functionality. This promotes code reuse and hierarchical classification. For example, consider a general class Instrument with a name attribute. A specialized class Guitar can extend Instrument and add a brand attribute. In Java:\n\npublic class Instrument {\n    private String name;\n    public Instrument() { /* constructor code */ }\n    // other methods\n}\n\npublic class Guitar extends Instrument {\n    private String brand;\n    public Guitar() {\n        super(); // calls Instrument constructor\n        // additional initialization\n    }\n    // other methods\n}",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the following overloaded methods in Java:\n\npublic static double getAverage(double first, double second)\npublic static double getAverage(double first, double second, double third)\npublic static char getAverage(char first, char second)\n\nWhat will be the output of this code snippet?\n\npublic static void main(String[] args) {\n    double average1 = getAverage(4.0, 50.0);\n    double average2 = getAverage(1.0, 2.0, 3.0);\n    char average3 = getAverage('a', 'c');\n    System.out.println(\"average1 = \" + average1);\n    System.out.println(\"average2 = \" + average2);\n    System.out.println(\"average3 = \" + average3);\n}",
+    "answer": "The output will be:\naverage1 = 27.0\naverage2 = 2.0\naverage3 = b\n\nExplanation:\n- average1: (4.0 + 50.0) / 2 = 27.0\n- average2: (1.0 + 2.0 + 3.0) / 3 = 2.0\n- average3: The average of characters 'a' (ASCII 97) and 'c' (ASCII 99) is (97 + 99) / 2 = 98, which corresponds to 'b'.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "True or False: A class can implement more than one interface by using the keyword extends. Explain your answer.",
+    "answer": "False.\nA class can implement more than one interface, but it uses the keyword implements, not extends, to do so. The extends keyword is used for class inheritance (i.e., when a class inherits from another class). For example:\n\npublic interface Mammal {\n    void eat();\n    void travel();\n}\n\npublic interface Human {\n    void study();\n}\n\npublic class Kids implements Mammal, Human {\n    public void study() { /* implementation */ }\n    public void eat() { /* implementation */ }\n    public void travel() { /* implementation */ }\n}\n\nHere, the class Kids implements two interfaces Mammal and Human using the implements keyword.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why it is better to implement the add operation in a collection before implementing the remove operation.",
+    "answer": "It is better to implement the add operation before the remove operation because you cannot test the remove functionality until you have written and tested the add functionality. Without the ability to add elements to the collection, there are no elements to remove, making it impossible to verify that the remove operation works correctly.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "What is the worst-case time complexity for searching a linked-based bag ADT for a particular entry? Explain your answer.",
+    "answer": "The worst-case time complexity for searching a linked-based bag ADT for a particular entry is O(n). This is because in a linked structure, you may need to traverse all nodes sequentially to find the target entry or determine it is not present, resulting in a linear time complexity proportional to the number of elements n.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Write the Java annotation used to suppress an unchecked-cast warning from the compiler and explain why such a warning might occur when allocating a generic array.",
+    "answer": "The Java annotation used to suppress an unchecked-cast warning is @SuppressWarnings(\"unchecked\"). Such a warning occurs when allocating a generic array using a cast like (T[]) new Object[capacity]; because Java does not allow the direct creation of generic arrays. The cast from Object[] to T[] is unchecked at runtime, so the compiler warns about potential type safety issues. Using @SuppressWarnings(\"unchecked\") tells the compiler to ignore this warning.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture15_midterm_exam_review_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the Last In, First Out (LIFO) principle as it applies to stacks and describe two basic operations that demonstrate this principle.",
+    "answer": "The Last In, First Out (LIFO) principle means that the most recently added item to the stack is the first one to be removed. In other words, the last element pushed onto the stack will be the first one popped off. Two basic operations that demonstrate this principle are: 1) push(newEntry): adds a new entry to the top of the stack, making it the last item added; 2) pop(): removes and returns the topmost entry from the stack, which is the most recently added item. This ensures that elements are accessed in the reverse order of their insertion.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the following sequence of stack operations on an initially empty stack:\n\nstringStack.push(\"Iron Man\");\nstringStack.push(\"Captain America\");\nstringStack.pop();\nstringStack.push(\"Hulk\");\nstringStack.push(\"Black Widow\");\nstringStack.push(\"Thor\");\nstringStack.pop();\n\nWhat string is at the top of the stack and what string is at the bottom after these operations? Explain your reasoning.",
+    "answer": "After the operations, \"Black Widow\" is at the top of the stack and \"Iron Man\" is at the bottom. Explanation: Initially, the stack is empty. After pushing \"Iron Man\" and \"Captain America\", the stack (top to bottom) is [\"Captain America\", \"Iron Man\"]. The pop() removes \"Captain America\", leaving [\"Iron Man\"]. Then \"Hulk\" is pushed: [\"Hulk\", \"Iron Man\"]. Next, \"Black Widow\" is pushed: [\"Black Widow\", \"Hulk\", \"Iron Man\"]. Then \"Thor\" is pushed: [\"Thor\", \"Black Widow\", \"Hulk\", \"Iron Man\"]. The final pop() removes \"Thor\", so the stack is [\"Black Widow\", \"Hulk\", \"Iron Man\"]. Therefore, \"Black Widow\" is on top and \"Iron Man\" is at the bottom.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the algorithm used to check if an expression has balanced delimiters (parentheses, brackets, braces) using a stack. What does the algorithm return for the expression \"{ a [ b + (c + 2) / d ] + e ) + f }\" and why?",
+    "answer": "The algorithm to check balanced delimiters uses a stack to ensure that every opening delimiter has a corresponding closing delimiter in the correct order. It processes the expression character by character: when it encounters an opening delimiter ('(', '[', '{'), it pushes it onto the stack; when it encounters a closing delimiter (')', ']', '}'), it checks if the stack is empty (which would mean an unmatched closing delimiter) and if not, it pops the top entry and verifies if it matches the type of the closing delimiter. If there is a mismatch or the stack is empty when a closing delimiter is found, the expression is unbalanced. After processing all characters, if the stack is not empty, the expression is also unbalanced. For the expression \"{ a [ b + (c + 2) / d ] + e ) + f }\", the algorithm returns false because there is an unmatched closing parenthesis ')' that does not correspond to any opening delimiter, causing the stack to be empty when the algorithm tries to match it, indicating unbalanced delimiters.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain how the checkBalance algorithm uses a stack to determine if delimiters in an expression are balanced. Include the role of the isPaired method in your explanation.",
+    "answer": "The checkBalance algorithm processes each character in the expression sequentially. When it encounters an opening delimiter ('(', '[', '{'), it pushes it onto the stack. When it encounters a closing delimiter (')', ']', '}'), it checks if the stack is empty; if it is, the expression is unbalanced. Otherwise, it pops the top element from the stack and uses the isPaired method to verify if the popped opening delimiter matches the current closing delimiter. If they do not form a valid pair, the expression is unbalanced. After processing all characters, if the stack is not empty, it means there are unmatched opening delimiters, so the expression is unbalanced. The isPaired method returns true if the given open and close characters form a valid pair of parentheses, brackets, or braces, and false otherwise. This method is critical for validating matching pairs during the stack pop operation.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the expression \"{ a [ b + (c + 2) / d ] + e ) + f }\", trace the contents of the stack at each step of the checkBalance algorithm and state the final result returned by the algorithm.",
+    "answer": "Step-by-step stack contents as the algorithm processes the expression:\n- '{' encountered: push '{' → Stack: ['{']\n- '[' encountered: push '[' → Stack: ['{', '[']\n- '(' encountered: push '(' → Stack: ['{', '[', '(']\n- ')' encountered: pop '(' and check pairing with ')' → matched → Stack: ['{', '[']\n- ']' encountered: pop '[' and check pairing with ']' → matched → Stack: ['{']\n- ')' encountered: stack top is '{', which does not pair with ')' → isBalanced set to false\nSince the algorithm finds a mismatch at this point, it stops processing further.\nFinal result: The algorithm returns false, indicating the delimiters are not balanced.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Consider the following Java code snippet:\n\nint n = 4;\nStackInterface<Integer> stack = new MyStack<>();\nwhile (n > 0) {\n  stack.push(n);\n  n--;\n}\nint result = 1;\nwhile (!stack.isEmpty()) {\n  int integer = stack.pop();\n  result = result * integer;\n}\nSystem.out.println(\"result = \" + result);\n\nWhat value is printed when this code executes, and what mathematical function does this code compute?",
+    "answer": "The code prints the value 24 when executed. This is because it pushes the integers 4, 3, 2, and 1 onto the stack in that order. Then, it pops each integer and multiplies it into the result variable, effectively calculating 4 * 3 * 2 * 1 = 24. This computation corresponds to the factorial function of 4, denoted as 4! = 24.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture16_stacks_1_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the algorithm to convert an infix expression to a postfix expression. Include how operators, operands, and parentheses are handled.",
+    "answer": "The infix-to-postfix conversion algorithm uses a stack to temporarily hold operators and outputs operands immediately. The steps are:\n- When an operand (variable) is encountered, append it directly to the postfix output.\n- When an operator '^' is encountered, push it onto the stack.\n- For operators '+', '-', '*', or '/', pop operators from the stack and append them to the postfix output as long as the stack is not empty and the precedence of the next operator is less than or equal to the precedence of the operator on top of the stack. Then push the new operator onto the stack.\n- When an open parenthesis '(' is encountered, push it onto the stack.\n- When a close parenthesis ')' is encountered, pop operators from the stack and append them to the postfix output until an open parenthesis '(' is popped. Discard both parentheses.\n- After processing the entire infix expression, pop any remaining operators from the stack and append them to the postfix output.\nThis ensures that the postfix expression respects operator precedence and parentheses.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the infix expression: a - ( b / ( c - d ) * e + f ) ^ g, convert it to postfix notation using the algorithm described.",
+    "answer": "The postfix expression for the given infix expression is:\n\n a b c d - / e * f + g ^ -\n\nExplanation:\n- The sub-expression (c - d) converts to c d -\n- Then b / (c - d) becomes b c d - /\n- Multiply by e: b c d - / e *\n- Add f: b c d - / e * f +\n- Raise to power g: b c d - / e * f + g ^\n- Finally subtract from a: a b c d - / e * f + g ^ -\nThis matches the postfix expression given in the lecture notes.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the process of evaluating a postfix expression using a stack. Include how operands and operators are handled during evaluation.",
+    "answer": "To evaluate a postfix expression:\n- Initialize an empty stack (valueStack).\n- Scan the postfix expression from left to right.\n- For each character:\n  - If it is an operand (variable), push its value onto the stack.\n  - If it is an operator (such as '+', '-', '*', '/', '^'):\n    - Pop the top two values from the stack; the first popped is operandTwo, the second is operandOne.\n    - Perform the operation: result = operandOne (operator) operandTwo.\n    - Push the result back onto the stack.\n- After processing all characters, the value remaining on the stack is the final result.\nThis method uses the stack to hold intermediate results and applies operators as soon as they are encountered, respecting the postfix order.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain how a stack can be used to evaluate an infix expression containing parentheses, based on the provided code snippet.",
+    "answer": "The provided code snippet shows that when a closing parenthesis ')' is encountered in the infix expression, the program pops operators from the operator stack until it finds the corresponding opening parenthesis '('. For each popped operator, it pops two operands from the value stack, applies the operator to these operands, and pushes the result back onto the value stack. This process effectively evaluates the sub-expression within the parentheses. After processing all parentheses, any remaining operators in the operator stack are popped and applied similarly to the operands in the value stack. Finally, the top of the value stack contains the result of the entire infix expression.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the key methods of the Java Stack class as mentioned in the context and their purposes.",
+    "answer": "The Java Stack class, found in java.util, provides several key methods: (1) A constructor that creates an empty stack; (2) push(T item) which adds an item to the top of the stack; (3) pop() which removes and returns the top item from the stack; (4) peek() which returns the top item without removing it; and (5) empty() which returns a boolean indicating whether the stack is empty. These methods allow for typical stack operations such as adding, removing, inspecting, and checking the stack's state.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Outline the algorithm to check if a string is a palindrome using a stack, considering only characters of interest and ignoring case, spaces, and punctuation.",
+    "answer": "First, identify and count the characters of interest in the string (ignoring spaces, punctuation, and case), denoting this count as N. Push the first N/2 characters of interest onto the stack. If N is odd, skip the middle character (at index N/2). Then, for the remaining N/2 characters of interest, compare each character in the input with the character popped from the stack. If any pair does not match (ignoring case), the string is not a palindrome. If all pairs match, the string is a palindrome. This works because the stack reverses the order of the first half of the characters, allowing comparison with the second half.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture17_stacks_2_chunks_chunk_1",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why, in a linked implementation of a stack, the top of the stack is typically placed at the beginning (head) of the linked list rather than at the end (tail).",
+    "answer": "Placing the top of the stack at the beginning of the linked list is preferred because it allows efficient access to the top element for all stack operations (push, pop, peek). The head of the linked list is the easiest and fastest to access. If the top were at the end of the chain, although you could efficiently access or push a new entry with a reference to the last node, popping would be inefficient because you would also need a reference to the next-to-last node to remove the last node. This makes the implementation more complex and less efficient. Therefore, placing the top at the beginning simplifies and optimizes stack operations.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture18_stack_implementations_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the following pop() method implementation for a linked stack:\n\npublic T pop() {\n    T top = peek();\n    topNode = topNode.getNextNode();\n    return top;\n}\n\nRevise this method so that it does not call peek(), and explain why this revision might be preferred.",
+    "answer": "Revised pop() method:\n\npublic T pop() {\n    if (topNode != null) {\n        T top = topNode.getData();\n        topNode = topNode.getNextNode();\n        numberOfEntries--;\n        return top;\n    } else {\n        throw new EmptyStackException();\n    }\n}\n\nExplanation:\nThe revised method avoids calling peek(), which itself checks if the stack is empty and retrieves the top data. By directly checking if topNode is null, the method can throw an EmptyStackException if the stack is empty. Otherwise, it retrieves the data from the topNode, updates the topNode reference to the next node, decrements the number of entries, and returns the data. This approach reduces method calls, potentially improving efficiency and clarity by handling the empty stack check and data retrieval in one place.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture18_stack_implementations_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the role of the 'topNode' reference in the linked implementation of a stack and how it facilitates the push operation.",
+    "answer": "In the linked implementation of a stack, 'topNode' is a reference to the first node in the chain, which represents the top of the stack. It is crucial because all stack operations (push, pop, peek) involve the top of the stack. For the push operation, a new node is created with its 'next' reference pointing to the current 'topNode'. Then, 'topNode' is updated to reference this new node, effectively placing the new node at the top of the stack. This approach allows push to be performed efficiently in constant time, as it only involves updating references without traversing the list.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture18_stack_implementations_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain how the push operation is implemented in the array-based stack implementation. Include how the method ensures there is enough capacity before adding a new entry.",
+    "answer": "In the array-based stack implementation, the push operation first calls checkIntegrity() to ensure the stack is in a valid state. Then it calls ensureCapacity() to check if there is enough space in the underlying array. If the array is full (i.e., topIndex is at the last position), ensureCapacity() doubles the size of the array by creating a new array with twice the length and copying the existing entries into it. After ensuring capacity, the new entry is added at the position topIndex + 1, and topIndex is incremented to reflect the new top of the stack.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture19_stack_implementations_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Compare and contrast the pop operation in the array-based stack implementation and the vector-based stack implementation based on the provided context.",
+    "answer": "In the array-based stack implementation, the pop operation first checks integrity and whether the stack is empty, throwing an EmptyStackException if it is. If not empty, it retrieves the top entry from the array at topIndex, sets that array position to null to avoid memory leaks, decrements topIndex, and returns the retrieved entry. In the vector-based stack implementation, pop also checks integrity and emptiness. It then removes and returns the last element of the vector using stack.remove(stack.size() - 1). Unlike the array-based implementation, the vector handles resizing automatically, and there is no need to manually set entries to null or manage an index variable.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture19_stack_implementations_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the role and importance of the integrityOK boolean variable in both array-based and vector-based stack implementations.",
+    "answer": "The integrityOK boolean variable is used to verify the integrity of the stack object before performing operations. It is initially set to false during construction and set to true only after the stack has been properly initialized (e.g., after creating the underlying array or vector and checking capacity). Before any stack operation (such as push, pop, or peek), the method checkIntegrity() is called to ensure integrityOK is true. This mechanism helps detect improper use or corruption of the stack object, preventing operations on an invalid or partially constructed stack, thereby enhancing robustness and reliability.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture19_stack_implementations_2_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Define Abstract Data Type (ADT) and explain how it differs from a data structure.",
+    "answer": "An Abstract Data Type (ADT) is a specification that describes a data set and the operations that can be performed on that data. It does not specify how the data is stored or how the operations are implemented. In contrast, a data structure is a concrete implementation of an ADT within a programming language, detailing how the data is stored and how the operations are carried out.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture1_introduction_and_java_review_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "List three examples of collections mentioned in the lecture and describe one characteristic that may vary among collections.",
+    "answer": "Three examples of collections mentioned are: Bag, List, and Stack. One characteristic that may vary among collections is whether they allow duplicate items; some collections permit duplicates while others do not. Additionally, some collections arrange their contents in a certain order, while others do not.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture1_introduction_and_java_review_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain the concept of encapsulation in Object-Oriented Programming and its significance, using the automobile analogy provided.",
+    "answer": "Encapsulation in Object-Oriented Programming is the practice of enclosing data and methods within a class and hiding the implementation details from the user. This means the programmer only receives enough information to use the class without needing to understand its internal workings. The automobile analogy illustrates this by showing that a driver can use the car’s controls without knowing the complex inner workings of the engine, thereby protecting the internal details and simplifying usage.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture1_introduction_and_java_review_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "What are the required components that must be included in the term project report for INFO 6205?",
+    "answer": "The term project report must be less than 10 pages and formatted in two columns. It should include the following sections: Problem Description (Introduction), Analysis (your study, research, etc.), Design (algorithms, system design, flow chart, etc.), Implementation (what APIs and tools are used), Evaluation (screenshots of sample runs, comparison, user study, etc.), Discussion (reflection), Conclusion (and Future Work), and Job assignments (each member’s contributions). The report template is provided in the “Docs” module on Canvas.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture20_important_dates_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "List at least five required topics from the course that must be covered in the final project for INFO 6205.",
+    "answer": "The final project must cover at least one topic from the following list, and three topics from the required topics list: Bag (Chapters 1, 2, 3), The Efficiency of Algorithm (Chapter 4), Stacks (Chapters 5, 6), Recursion (Chapters 9, 14), Queues, Deques, Priority Queue (Chapters 7, 8), Lists (Chapters 10, 11, 12), Sorting (Chapters 15, 16), Hashing (Chapters 22, 23), Trees (Chapters 24, 25), Binary Search Tree (Chapter 26), Heap (Chapter 27), Balanced Search Tree (Chapter 28), Graph (Chapters 29, 30).",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture20_important_dates_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Describe the submission requirements and deadlines for the final project presentation and final project in INFO 6205.",
+    "answer": "The final project presentation and live demo are due by 11:59 pm on Wednesday, December 4. The presentation must be a recorded video less than 20 minutes in .mp4 or .mov format. All team members must turn on their cameras and contribute during the presentation. The final project submission is due by 11:59 pm on Saturday, December 7. It must include the term project source files as an Eclipse Java project, an instruction file (.txt) explaining how to run the project, the term project report (.pdf or .docx), and the final project presentation slides (.pdf or .pptx). All these files should be compressed into one .zip file named “TeamName.zip”. Submission links for both will be available on Canvas.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture20_important_dates_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain what recursion is and provide a real-world analogy mentioned in the lecture to illustrate the concept.",
+    "answer": "Recursion is a problem-solving process that breaks a problem into identical but smaller problems. A recursive method is one that calls itself, with each invocation called a recursive call or recursive invocation. A real-world analogy from the lecture is the hiring process of contractors: a contractor hires a subcontractor for a portion of the job, who in turn hires a sub-subcontractor for a smaller portion, and so on. When the last sub-sub-subcontractor finishes, each one reports \"done\" up the line, similar to how recursive calls return results back up the chain.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture21_recursion_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the recursive method countDown(int integer) that prints numbers from integer down to 1, explain why it is important to have a base case and what would happen if the base case were missing.",
+    "answer": "In the countDown method, the base case is when the integer is not greater than 1, which stops further recursive calls. The base case is crucial because it provides a condition under which the recursion terminates. Without a base case, the method would keep calling itself indefinitely, leading to infinite recursion and eventually causing a stack overflow error due to too many activation records being generated on the call stack.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture21_recursion_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Analyze the recursive method countWays(int n) that counts the number of ways a child can run up a staircase of n steps by hopping 1, 2, or 3 steps at a time. Describe the base cases and the recursive case, and explain why these are necessary.",
+    "answer": "The method countWays(int n) has two base cases: when n < 0, it returns 0, indicating no valid ways to climb a negative number of steps; and when n == 0, it returns 1, representing one valid way to stand at the bottom without climbing further. The recursive case returns the sum of countWays(n-1), countWays(n-2), and countWays(n-3), which counts all possible ways to reach step n by hopping 1, 2, or 3 steps from previous positions. These base cases prevent infinite recursion and provide the foundation for building up the solution, while the recursive case breaks the problem into smaller subproblems that are combined to find the total number of ways.",
+    "difficulty": "hard",
+    "source_id": "intro_data_structures_intro_data_structures_lecture21_recursion_1_chunks_chunk_0",
+    "course": "intro_data_structures"
+  }
+]

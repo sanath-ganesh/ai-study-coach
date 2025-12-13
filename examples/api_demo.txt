@@ -1,0 +1,8 @@
+curl request:
+curl -X POST http://localhost:8000/ask -H "Content-Type: application/json" -d "{\"question\":\"What is a binary search tree?\",\"mode\":\"qa\"}"
+
+Response:
+{
+  "answer": "A binary search tree is a binary tree where for each node:\n- The node’s data is greater than all data in the node’s left subtree.\n- The node’s data is less than all data in the node’s right subtree.\nAdditionally, every node in a binary search tree is the root of a binary search tree. [Source 1]"",
+  "used_sources": ["intro_data_structures_lecture30_Trees_chunks.txt#1","intro_data_structures_lecture31_Trees Implementations_chunks.txt#0","intro_data_structures_lecture30_Trees_chunks.txt#0","intro_data_structures_lecture31_Trees Implementations_chunks.txt#1","intro_data_structures_lecture12_bag_implementation_linked_data_1_chunks.txt#1"]
+}

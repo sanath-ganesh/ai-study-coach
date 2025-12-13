@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Study Coach – Project</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      border: 1px solid #444;
+      text-decoration: none;
+      margin: 0.25rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI Study Coach</h1>
+    <p>A RAG-based generative AI tutor for Introduction to Data Structures.</p>
+    <a class="btn" href="https://github.com/sanath-ganesh/ai-study-coach" target="_blank">View on GitHub</a>
+    <a class="btn" href="https://your-demo-video-link.com" target="_blank">Watch Demo Video</a>
+  </header>
+
+  <section>
+    <h2>What It Does</h2>
+    <ul>
+      <li>Answers questions about your course notes using Retrieval-Augmented Generation (RAG).</li>
+      <li>Generates practice quizzes from your materials (synthetic data generation).</li>
+      <li>Explains topics simply or with analogies using prompt-engineered tutor modes.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>How It Works</h2>
+    <ol>
+      <li>Upload PDFs of your course materials into <code>data/raw/</code>.</li>
+      <li>Run the ingestion script to build a vector index over your notes.</li>
+      <li>Interact through the Streamlit web app (question answering, explanations, quiz generation).</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Under the Hood</h2>
+    <ul>
+      <li>FastAPI backend providing /ask and /generate_synthetic endpoints.</li>
+      <li>OpenAI models for embeddings and chat completion.</li>
+      <li>ChromaDB as a persistent vector database.</li>
+      <li>Prompt engineering for different tutor modes and quiz generation.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Links</h2>
+    <ul>
+      <li><a href="../docs/report.pdf" target="_blank">Project Report (PDF)</a></li>
+      <li><a href="../docs/architecture_diagram.png" target="_blank">System Architecture Diagram</a></li>
+    </ul>
+  </section>
+</body>
+</html>

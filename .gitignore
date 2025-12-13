@@ -1,0 +1,68 @@
+# ---------------------------
+# Python
+# ---------------------------
+__pycache__/
+.pytest_cache
+*.py[cod]
+*.pyo
+*.pyd
+*.tmp
+*.log
+
+# Virtual environment
+venv/
+.venv/
+env/
+env.bak/
+ai-study-coach-env/
+
+# Jupyter / python execution
+.ipynb_checkpoints/
+.profile
+
+# ---------------------------
+# IDE / Editor
+# ---------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---------------------------
+# FastAPI / Streamlit
+# ---------------------------
+*.db
+*.sqlite3
+
+# Local cache directories
+.cache/
+.streamlit/
+
+# ---------------------------
+# ChromaDB (your vector DB)
+# ---------------------------
+vector_store/
+chroma/
+chroma_db/
+chroma.sqlite3
+
+# ---------------------------
+# OS / Machine Specific
+# ---------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------
+# Build / distribution
+# ---------------------------
+dist/
+build/
+*.egg-info/
+pip-wheel-metadata/
+
+# ---------------------------
+# Compiled files
+# ---------------------------
+*.so
+*.dll

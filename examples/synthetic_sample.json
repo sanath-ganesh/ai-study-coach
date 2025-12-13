@@ -1,0 +1,37 @@
+[
+  {
+    "question": "Explain how the add method in the ArrayBag class ensures that no more entries are added once the bag is full. Include in your explanation the role of the checkIntegrity() and isArrayFull() methods.",
+    "answer": "The add method in the ArrayBag class first calls checkIntegrity() to verify that the bag's internal state is valid and secure before proceeding. Then, it checks if the underlying array is full by calling isArrayFull(). If the array is full, the method returns false, indicating that the addition was unsuccessful. Otherwise, it adds the new entry to the bag at the position indicated by numberOfEntries, increments numberOfEntries, and returns true. This mechanism prevents adding entries beyond the bag's capacity, ensuring the implementation is secure and does not cause array overflow.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the stub methods remove() and clear() in the ArrayBag class, describe what their intended functionalities are and why they currently return default values or have empty bodies.",
+    "answer": "The remove() method is intended to remove one unspecified entry from the bag and return the removed entry if successful, or null if no removal is possible. The remove(T anEntry) method is meant to remove one occurrence of a specific entry from the bag and return true if successful or false otherwise. The clear() method should remove all entries from the bag, effectively emptying it. Currently, these methods are stubs, meaning they have placeholder implementations: remove() returns null, remove(T anEntry) returns false, and clear() has an empty body. These stubs exist because the methods are incomplete and need to be fully implemented later to provide the described functionalities.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Write a Java method named display that takes a BagInterface<String> as a parameter and prints all the elements in the bag, each on a new line, preceded by the message \"myBag contains following heroes:\". Use the toArray() method of the bag to access its contents.",
+    "answer": "public static void display(BagInterface<String> aBag) {\n    System.out.println(\"myBag contains following heroes:\");\n    Object[] bagArray = aBag.toArray();\n    System.out.println(\" \");\n    for (int index = 0; index < bagArray.length; index++) {\n        System.out.println(bagArray[index]);\n    }\n    System.out.println();\n}\n\nThis method first prints the header message, then retrieves the contents of the bag as an Object array using toArray(). It iterates through the array, printing each element on a new line, and finally prints an empty line for formatting.",
+    "difficulty": "easy",
+    "source_id": "intro_data_structures_intro_data_structures_lecture10_bag_implementation_arrays_2 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Explain why the remove() method in the ArrayBag implementation replaces the removed entry with null. What is the significance of this action in terms of memory management?",
+    "answer": "The remove() method replaces the removed entry with null to eliminate the reference to the object stored at that position in the array. By setting bag[numberOfEntries] to null, the method allows the Java garbage collector to reclaim the memory assigned to the deleted entry, provided no other references to that object exist elsewhere in the client code. This prevents memory leaks by ensuring that unused objects are eligible for garbage collection.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  },
+  {
+    "question": "Given the following method signature in ArrayBag: public boolean remove(T anEntry), why is it preferable to implement the return statement as 'return result != null;' rather than 'return result.equals(anEntry);'?",
+    "answer": "Using 'return result != null;' is preferable because it directly checks whether an entry was actually removed (i.e., removeEntry returned a non-null object). This avoids potential NullPointerExceptions that could occur if result is null and equals() is called on it. Additionally, since removeEntry returns the removed entry or null if no removal occurred, checking for non-null is sufficient to confirm successful removal. On the other hand, 'return result.equals(anEntry);' assumes result is non-null and that the removed entry equals the argument, which may not always be safe or necessary.",
+    "difficulty": "medium",
+    "source_id": "intro_data_structures_intro_data_structures_lecture11_bag_implementation_arrays_3 (1)_chunks_chunk_0",
+    "course": "intro_data_structures"
+  }
+]

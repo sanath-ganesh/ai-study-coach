@@ -1,0 +1,60 @@
+{
+  "request": {
+    "question": "Create a quiz from the materials about linked lists.",
+    "mode": "quiz"
+  },
+  "response": {
+    "answer": [
+      {
+        "question": "What is the definition of an Abstract Data Type (ADT)?",
+        "options": [
+          "A specification that describes a data set and the operations on that data, independent of implementation",
+          "A specific implementation of a data structure in Java",
+          "A collection that allows duplicate items",
+          "A programming language feature for encapsulation"
+        ],
+        "correct_index": 0,
+        "explanation": "An ADT is a specification that describes a data set and the operations on that data without indicating how to store or implement them, independent of any programming language.",
+        "source": "Source 1"
+      },
+      {
+        "question": "Which Java keyword is used by a class to implement multiple interfaces?",
+        "options": ["implements", "extends", "interface", "import"],
+        "correct_index": 0,
+        "explanation": "A class can implement more than one interface by using the 'implements' keyword, not 'extends'.",
+        "source": "Source 2"
+      },
+      {
+        "question": "What is the worst-case time complexity for searching a linked-based bag ADT for a particular entry?",
+        "options": ["O(n)", "O(1)", "O(n!)", "negligible"],
+        "correct_index": 0,
+        "explanation": "The worst-case time complexity for searching a linked-based bag ADT is O(n) because it may require checking each entry.",
+        "source": "Source 5"
+      },
+      {
+        "question": "Why is it better to implement the add operation in a collection before implementing the remove operation?",
+        "options": [
+          "Because you cannot test remove functionality until you have written and tested add functionality",
+          "Because remove is more complex than add",
+          "Because add operation uses less memory",
+          "Because remove operation requires inheritance"
+        ],
+        "correct_index": 0,
+        "explanation": "You cannot test remove functionality until you have written and tested add functionality.",
+        "source": "Source 5"
+      },
+      {
+        "question": "In a linked implementation of a stack, where is the top of the stack best placed?",
+        "options": [
+          "At the beginning (head) of the linked list",
+          "At the end (tail) of the linked list",
+          "In the middle of the linked list",
+          "It does not matter"
+        ],
+        "correct_index": 0,
+        "explanation": "Placing the stack’s top entry at the beginning of the chain is easiest and fastest to access, making push, pop, and peek operations efficient.",
+        "source": "Source 4"
+      }
+    ]
+  }
+}
