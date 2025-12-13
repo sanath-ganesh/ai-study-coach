@@ -1,4 +1,4 @@
-# 📚 AI Study Coach
+# AI Study Coach
 
 A generative AI project that uses Retrieval-Augmented Generation (RAG), prompt engineering, and synthetic data generation to help students study **Introduction to Data Structures** (or any course you configure).
 
