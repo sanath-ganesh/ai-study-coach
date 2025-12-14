@@ -54,7 +54,16 @@ Then open the Streamlit URL, ask questions, and generate quizzes.
 
 ## Project Structure
 
-(see description in the main report / documentation)
+```text
+ai-study-coach/
+├─ backend/          # Core application logic (API, RAG, prompts, embeddings)
+├─ frontend/         # Streamlit app
+├─ data/             # Raw PDFs, processed text, synthetic data
+├─ vector_store/     # ChromaDB persistent index
+├─ tests/            # Automated tests
+├─ web/              # Public project page (GitHub Pages)
+├─ docs/             # Report PDF, diagram, etc.
+```
 
 ## Evaluation
 
